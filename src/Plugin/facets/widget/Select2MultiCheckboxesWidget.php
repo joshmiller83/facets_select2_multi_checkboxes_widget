@@ -111,6 +111,8 @@ class Select2MultiCheckboxesWidget extends WidgetPluginBase implements Container
       ],
       '#select2' => [
         'placeholder' => $facet->getName(),
+        'placeholderForSearch' => t("Search"),
+        'search' => $this->getConfiguration()['search'],
         'dropdownAutoWidth' => false,
         'width' => $this->getConfiguration()['width']
       ],
@@ -133,6 +135,12 @@ class Select2MultiCheckboxesWidget extends WidgetPluginBase implements Container
       '#size' => '12',
       '#pattern' => "([0-9]*\.[0-9]+|[0-9]+)(cm|mm|in|px|pt|pc|em|ex|ch|rem|vm|vh|vmin|vmax|%)|element|computedstyle|style|resolve|auto|initial|inherit",
     ];
+
+    $form['search'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show serch fied'),
+      '#default_value' => $this->getConfiguration()['search'],
+    );
 
     return $form;
   }

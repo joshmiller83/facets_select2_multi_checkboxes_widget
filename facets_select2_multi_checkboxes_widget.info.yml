@@ -6,3 +6,4 @@ core: '8.x'
 dependencies:
   - facets:facets (>=8.x-1.5)
   - select2
+

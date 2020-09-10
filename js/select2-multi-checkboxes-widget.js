@@ -17,7 +17,7 @@
     "select2/selection/multiple",
     "select2/selection/placeholder",
     "select2/selection/eventRelay",
-    "select2/selection/single",
+    "select2/selection/single"
   ],
   function(Utils, MultipleSelection, Placeholder, EventRelay, SingleSelection) {
     let adapter = Utils.Decorate(MultipleSelection, Placeholder);
@@ -42,6 +42,40 @@
   });
 
   /**
+   * Define custom dropdown adapter for Select2.
+   */
+  $.fn.select2.amd.define("Select2MultiCheckboxesDropdownAdapter", [
+    "select2/utils",
+    "select2/dropdown",
+    "select2/dropdown/attachBody",
+    "select2/dropdown/search"
+  ],
+  function(Utils, Dropdown, AttachBody, Search) {
+    let dropdownWithSearch = Utils.Decorate(Dropdown, Search);
+    dropdownWithSearch.prototype.render = function() {
+      var $rendered = Dropdown.prototype.render.call(this);
+      let placeholder = this.options.get("placeholderForSearch") || "";
+      var $search = $(
+        '<span class="select2-search select2-search--dropdown">' +
+        '<input class="select2-search__field" placeholder="' + placeholder + '" type="search"' +
+        ' tabindex="-1" autocomplete="off" autocorrect="off" autocapitalize="off"' +
+        ' spellcheck="false" role="textbox" />' +
+        '</span>'
+      );
+
+      this.$searchContainer = $search;
+      this.$search = $search.find('input');
+
+      $rendered.prepend($search);
+      return $rendered;
+    };
+
+    let adapter = Utils.Decorate(dropdownWithSearch, AttachBody);
+
+    return adapter;
+  });
+
+  /**
    * Override Select2 config on initialization and provide facets behaviour.
    */
   Drupal.facets.initSelect2MultiCheckboxes = function (context, settings) {
@@ -49,6 +83,9 @@
       var config = $(e.target).data('select2-config');
 
       config.selectionAdapter = $.fn.select2.amd.require("Select2MultiCheckboxesSelectionAdapter");
+      if (config.search) {
+        config.dropdownAdapter = $.fn.select2.amd.require("Select2MultiCheckboxesDropdownAdapter");
+      }
 
       config.templateResult = function(result) {
         var checkbox = '<input type="checkbox">';
@@ -57,7 +94,7 @@
         }
         if (result.loading !== undefined)
           return result.text;
-        return $('<div>').append(checkbox).append(result.text).addClass("checkbox-item");
+        return $('<div>').append(checkbox).append(result.text).addClass("select2-results__option__checkbox-wrapper");
       };
 
       $(e.target).data('select2-config', config);

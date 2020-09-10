@@ -5,3 +5,6 @@ facet.widget.config.select2_multi_checkboxes:
     width:
       type: string
       label: 'Field width'
+    search:
+      type: boolean
+      label: 'Show serch fied'
