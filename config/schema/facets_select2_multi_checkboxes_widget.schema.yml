@@ -1,0 +1,7 @@
+facet.widget.config.select2_multi_checkboxes:
+  type: facet.widget.default_config
+  label: 'Select2 Multi Checkboxes Widget configuration'
+  mapping:
+    width:
+      type: string
+      label: 'Field width'

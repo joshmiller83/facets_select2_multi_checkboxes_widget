@@ -1,0 +1,9 @@
+select2-multi-checkboxes-widget:
+  js:
+    js/select2-multi-checkboxes-widget.js: {}
+  css:
+    component:
+      css/select2-multi-checkboxes-widget.css: {}
+  dependencies:
+    - select2/select2.min
+    - core/sortable
