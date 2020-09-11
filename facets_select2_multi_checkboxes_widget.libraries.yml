@@ -6,4 +6,4 @@ select2-multi-checkboxes-widget:
       css/select2-multi-checkboxes-widget.css: {}
   dependencies:
     - select2/select2.min
-    - core/sortable
+    - facets/widget
