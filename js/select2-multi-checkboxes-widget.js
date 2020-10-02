@@ -1,6 +1,6 @@
 /**
  * @file
- * Init Select2 Multi Checkboxrs widget.
+ * Init Select2 Multi Checkboxes widget.
  */
 
 (function ($, Drupal) {
