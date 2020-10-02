@@ -70,8 +70,6 @@ class Select2MultiCheckboxesWidget extends WidgetPluginBase implements Container
    * {@inheritdoc}
    */
   public function build(FacetInterface $facet) {
-    $this->facet = $facet;
-
     $items = [];
     $active_items = [];
     foreach ($facet->getResults() as $result) {
@@ -93,35 +91,40 @@ class Select2MultiCheckboxesWidget extends WidgetPluginBase implements Container
       '#attributes' => [
         'class' => ['facets-widget-select2_multi_checkboxes'],
       ],
-      'content' => [
-        '#type' => 'select2',
-        '#options' => $items,
-        '#required' => FALSE,
-        '#value' => $active_items,
-        '#multiple' => !$facet->getShowOnlyOneResult(),
-        '#name' => $facet->getName(),
-        '#title' => $facet->get('show_title') ? $facet->getName() : '',
-        '#attributes' => [
-          'data-drupal-facet-id' => $facet->id(),
-          'data-drupal-selector' => 'facet-' . $facet->id(),
-          'class' => ['js-facets-select2-multi-checkboxes', 'js-facets-widget'],
+    ];
+
+    if (empty($items)) {
+      $element['#attributes']['class'][] = 'hidden';
+    }
+
+    $element['content'] = [
+      '#type' => 'select2',
+      '#options' => $items,
+      '#required' => FALSE,
+      '#value' => $active_items,
+      '#multiple' => !$facet->getShowOnlyOneResult(),
+      '#name' => $facet->getName(),
+      '#title' => $facet->get('show_title') ? $facet->getName() : '',
+      '#attributes' => [
+        'data-drupal-facet-id' => $facet->id(),
+        'data-drupal-selector' => 'facet-' . $facet->id(),
+        'class' => ['js-facets-select2-multi-checkboxes', 'js-facets-widget'],
+      ],
+      '#attached' => [
+        'library' => ['facets_select2_multi_checkboxes_widget/select2-multi-checkboxes-widget'],
+      ],
+      '#cache' => [
+        'contexts' => [
+          'url.path',
+          'url.query_args',
         ],
-        '#attached' => [
-          'library' => ['facets_select2_multi_checkboxes_widget/select2-multi-checkboxes-widget'],
-        ],
-        '#cache' => [
-          'contexts' => [
-            'url.path',
-            'url.query_args',
-          ],
-        ],
-        '#select2' => [
-          'placeholder' => $facet->getName(),
-          'placeholderForSearch' => t("Search"),
-          'search' => $this->getConfiguration()['search'],
-          'dropdownAutoWidth' => false,
-          'width' => $this->getConfiguration()['width']
-        ],
+      ],
+      '#select2' => [
+        'placeholder' => $facet->getName(),
+        'placeholderForSearch' => t("Search"),
+        'search' => $this->getConfiguration()['search'],
+        'dropdownAutoWidth' => false,
+        'width' => $this->getConfiguration()['width']
       ],
     ];
 
