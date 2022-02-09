@@ -1,0 +1,13 @@
+{
+  "name": "joshmiller83/facets_select2_multi_checkboxes_widget",
+  "type": "drupal-module",
+  "description": "Forked from drupal/facets_select2_multi_checkboxes_widget for compatability to facets 2.x. This module provides Select2 Multi Checkboxes widget for Facets module",
+  "homepage": "http://drupal.org/project/facets_select2_multi_checkboxes_widget",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": "^7.3 || ^8.0",
+    "drupal/core": "^9.2 || ^10",
+    "drupal/facets": "^2",
+    "drupal/select2": "^1.13"
+  }
+}
