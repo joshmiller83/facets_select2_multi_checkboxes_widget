@@ -3,7 +3,7 @@ name: Facets Select2 Multi Checkboxes Widget
 description: 'Provides Select2 Multi Checkboxes Widget for Facets module.'
 package: Search
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 dependencies:
   - facets:facets (>=2.0)
   - select2
